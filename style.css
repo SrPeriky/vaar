@@ -1,0 +1,29 @@
+.btn-flotante {
+font-size: 4vh; /* Cambiar el tamaño de la tipografia */
+text-transform: uppercase; /* Texto en mayusculas */
+color: #e3e3e3; /* Color del texto */
+border-radius: 1vh; /* Borde del boton */
+background-color: #606060; /* Color de fondo */
+padding: 2vh; /* Relleno del boton */
+position: fixed;
+z-index: 99;
+}
+#craf{
+	bottom: 20vh;
+	right: 20vh;
+}
+
+#pause{
+	bottom: 90vh;
+	right: 95vw;
+}
+
+#tienda{
+	bottom: 90vh;
+	right: 2vh;
+}
+
+#cliente{
+	bottom: 80vh;
+	right: 2vh;
+}

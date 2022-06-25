@@ -46,18 +46,26 @@ class Pruebas_model extends CI_Model {
          * **************/
         $this->load->dbforge();
 
-        
+        $l = 0;
+        $arrayName = array(0 => 'c1', 1 => 'c2', 2 => 'c3', 3 => 'c4', 4 => 'c5');
+        $indices = array(0 => 'REGISTRO', 1 => 'PERIODO', 2 => 'IDENTIFICACION', 3 => 'NOMBRE');
+        $temResult = array();
+
         $fields['id'] = array(
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
                 'auto_increment' => true
         );
+
         for ($i=0; $i < $cont; $i++) { 
-            $fields[str_replace(" ", "_", $keysFill[$i])] = array(
+            $temNom = str_replace(" ", "_", $keysFill[$i]);
+            $fields[$temNom] = array(
                     'type' => 'VARCHAR',
                     'constraint' => '250'
             );
+
+            for ($u=0; $u < count($indices); $u++) if (str_contains($temNom, $indices[$u])) array_push($temResult, $temNom);
         }
         
         $this->dbforge->add_key('id',true);
@@ -66,6 +74,14 @@ class Pruebas_model extends CI_Model {
         $attributes = array('ENGINE' => 'InnoDB');
         $this->dbforge->create_table($nom, true,$attributes);
         $this->db->insert_batch($nom, $file);
+
+        $sql = 'ALTER TABLE ' . $nom .' CHANGE ';
+        for ($i=0; $i < count($arrayName); $i++) { 
+            $consult = $sql . ' ' . $temResult[$i] . ' ' . $arrayName[$i] . ' VARCHAR(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;';
+            $query = $this->db->query($consult);
+            $query->result();
+        }
+
         return $nom;
     }
 
@@ -79,7 +95,7 @@ class Pruebas_model extends CI_Model {
         $cc = array();
 
         foreach ($temp as $key) {
-            if (trim($key->IDENTIFICACION)!='' && ! in_array($key->IDENTIFICACION, $cc)) {
+            if ($key->IDENTIFICACION!='' && ! in_array($key->IDENTIFICACION, $cc)) {
                 array_push($estudiantes, array(
                     'id_institucion' => intval($this->session->userdata('id_instituto')),
                     'id_programa' => intval($curso),
@@ -96,12 +112,12 @@ class Pruebas_model extends CI_Model {
                     'cc' => $key->IDENTIFICACION,
                     'registro' => $key->REGISTRO,
                     'periodo' => $key->PERIODO,
-                    'comunicacion_escrita' => $key->COMUNICACION_ESCRITA,
-                    'razonamiento_cuantitativo' => $key->RAZONAMIENTO_CUANTITATIVO,
-                    'lectura_critica' => $key->LECTURA_CRITICA,
-                    'competencias_ciudadanas' => $key->COMPETENCIAS_CIUDADANAS,
-                    'ingles' => $key->INGLES,
-                    'nivel' => $key->NIVEL 
+                    'c1' => $key->c1, // Competencia comunicacion_escrita - saber pro lectura_critica - saber 11
+                    'c2' => $key->c2, // competencia 2 razonamiento_cuantitativo - saber pro matematicas - saber 11
+                    'c3' => $key->c3, // competencia 3 lectura_critica saber pro sociales_y_ciudadanas - saber 11
+                    'c4' => $key->c4, // Competencia 4 competencias_ciudadanas - saber pro ciencias_naturales - saber 11    
+                    'c5' => $key->c5  // competencia 5 ingles - saber pro ingles - saber 11
+                    //'nivel' => $key->NIVEL 
                     //'nivel' => (intval(strlen($key->NIVEL)) == 2 ) ? $key->NIVEL : '' 
                 ));
             }

@@ -30,7 +30,6 @@ class Pruebas extends CI_Controller {
         if ($this->validacion->estaconectado()) {
             $fileData = $this->csvimport->get_array($_FILES["csv_file"]["tmp_name"]);
             if ($fileData[0]) $keysFileData = array_keys($fileData[0]);
-            
             $tabla = $this->Pruebas_model->newTable($keysFileData, count($keysFileData), $fileData); // crear tabla en la base de datos segun el archivo
             $curso = intval($this->input->post('curso'));
             $tipo = intval($this->input->post('prueba'));

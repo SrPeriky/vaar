@@ -128,11 +128,8 @@ class Reportes extends CI_Controller {
     }
 //1005064537
 //1047510748
-
-
     /*public function FunctionName($value='')
     {
-
         $html='
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -148,9 +145,6 @@ class Reportes extends CI_Controller {
             </div>
         </div>
         ';
-
-
-
         return $html;
     }*/
 
@@ -179,11 +173,9 @@ class Reportes extends CI_Controller {
             $v1 = /*explode(",", */$this->input->post("v1");//);
             $v2 = explode(",", $this->input->post("v2"));
             $v3 = /*explode(",", */$this->input->post("v3");//);
-            //$res = array();
             $arrayVA = array();
-            //$data;
             for ($i=0; $i < count($v2); $i++) { 
-                //$html = $v2[$i];
+
                 $res = $this->Reportes_model->optenerResultadosDeLaPrueba($v0, $v1, $v2[$i], $v3);
                 $va["nom"] = $this->Reportes_model->getNomPrueba(intval($v2[$i]));
                 $va["id"] = intval($v2[$i]);
