@@ -3,6 +3,7 @@
 class Pruebas_model extends CI_Model {
     public function __construct() {
         parent::__construct();
+        $this->load->library('Validacion');
     }
 
     public function getCursos(){
@@ -48,7 +49,7 @@ class Pruebas_model extends CI_Model {
 
         $l = 0;
         $arrayName = array(0 => 'c1', 1 => 'c2', 2 => 'c3', 3 => 'c4', 4 => 'c5');
-        $indices = array(0 => 'REGISTRO', 1 => 'PERIODO', 2 => 'IDENTIFICACION', 3 => 'NOMBRE');
+        $indices = array(0 => 'REGISTRO', 1 => 'PERIODO', 2 => 'IDENTIFICACION', 3 => 'NOMBRE', 4 => 'id');
         $temResult = array();
 
         $fields['id'] = array(
@@ -60,12 +61,27 @@ class Pruebas_model extends CI_Model {
 
         for ($i=0; $i < $cont; $i++) { 
             $temNom = str_replace(" ", "_", $keysFill[$i]);
+            $temExis = true;
             $fields[$temNom] = array(
                     'type' => 'VARCHAR',
                     'constraint' => '250'
             );
+            // preg_match("/{$search}/i", $mystring)
+            for ($u=0; $u < count($indices); $u++){
+                $search = $indices[$u];
+                if (preg_match("/{$search}/i", $temNom)) {
+                    $temExis = false;
+                    break;
+                }/* else {
+                    array_push($temResult, $temNom);
+                    echo $temNom."<br><br>"; 
+                }*/
+            }
 
-            for ($u=0; $u < count($indices); $u++) if (str_contains($temNom, $indices[$u])) array_push($temResult, $temNom);
+            if ($temExis) {
+                array_push($temResult, $temNom);
+                //echo $temNom."<br><br>"; 
+            }
         }
         
         $this->dbforge->add_key('id',true);
@@ -79,7 +95,7 @@ class Pruebas_model extends CI_Model {
         for ($i=0; $i < count($arrayName); $i++) { 
             $consult = $sql . ' ' . $temResult[$i] . ' ' . $arrayName[$i] . ' VARCHAR(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;';
             $query = $this->db->query($consult);
-            $query->result();
+            //$query->result();
         }
 
         return $nom;

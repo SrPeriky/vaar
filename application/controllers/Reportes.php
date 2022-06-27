@@ -179,34 +179,28 @@ class Reportes extends CI_Controller {
                 $res = $this->Reportes_model->optenerResultadosDeLaPrueba($v0, $v1, $v2[$i], $v3);
                 $va["nom"] = $this->Reportes_model->getNomPrueba(intval($v2[$i]));
                 $va["id"] = intval($v2[$i]);
-                $saber11["comunicacion_escrita"] = array();
-                $saber11["razonamiento_cuantitativo"] = array();
-                $saber11["lectura_critica"] = array();
-                $saber11["competencias_ciudadanas"] = array();
-                $saber11["ingles"] = array();
-
-                $prueba["comunicacion_escrita"] = array();
-                $prueba["razonamiento_cuantitativo"] = array();
-                $prueba["lectura_critica"] = array();
-                $prueba["competencias_ciudadanas"] = array();
-                $prueba["ingles"] = array();
+                
+                $saber11["c1"] = array(); $prueba["c1"] = array();
+                $saber11["c2"] = array(); $prueba["c2"] = array();
+                $saber11["c3"] = array(); $prueba["c3"] = array();
+                $saber11["c4"] = array(); $prueba["c4"] = array();
+                $saber11["c5"] = array(); $prueba["c5"] = array();
 
                 $temp = true;
                 for ($o=0; $o < count($res); $o++) { 
                     if ($temp) {
-                        # code...
-                        array_push($saber11["comunicacion_escrita"], intval($res[$o]->comunicacion_escrita));
-                        array_push($saber11["razonamiento_cuantitativo"], intval($res[$o]->razonamiento_cuantitativo));
-                        array_push($saber11["lectura_critica"], intval($res[$o]->lectura_critica));
-                        array_push($saber11["competencias_ciudadanas"], intval($res[$o]->competencias_ciudadanas));
-                        array_push($saber11["ingles"], intval($res[$o]->ingles));
+                        array_push($saber11["c1"], intval($res[$o]->c1));
+                        array_push($saber11["c2"], intval($res[$o]->c2));
+                        array_push($saber11["c3"], intval($res[$o]->c3));
+                        array_push($saber11["c4"], intval($res[$o]->c4));
+                        array_push($saber11["c5"], intval($res[$o]->c5));
                         $temp = false;
                     } else {
-                        array_push($prueba["comunicacion_escrita"], intval($res[$o]->comunicacion_escrita));
-                        array_push($prueba["razonamiento_cuantitativo"], intval($res[$o]->razonamiento_cuantitativo));
-                        array_push($prueba["lectura_critica"], intval($res[$o]->lectura_critica));
-                        array_push($prueba["competencias_ciudadanas"], intval($res[$o]->competencias_ciudadanas));
-                        array_push($prueba["ingles"], intval($res[$o]->ingles));
+                        array_push($prueba["c1"], intval($res[$o]->c1));
+                        array_push($prueba["c2"], intval($res[$o]->c2));
+                        array_push($prueba["c3"], intval($res[$o]->c3));
+                        array_push($prueba["c4"], intval($res[$o]->c4));
+                        array_push($prueba["c5"], intval($res[$o]->c5));
                         $temp = true; 
                     }
                 }
