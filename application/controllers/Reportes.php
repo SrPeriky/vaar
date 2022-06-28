@@ -122,7 +122,9 @@ class Reportes extends CI_Controller {
             for ($i=0; $i < $n; $i++){
                 $va[$i] = ($prueba[$i] - round($w * $saber11[$i] + $b)); 
                 if ($va[$i]<0) $va["malo"]++; else $va["bueno"]++;
-            } 
+            }
+            $va["malo"] = ($va["malo"]*100)/$va["total"];
+            $va["bueno"] = ($va["bueno"]*100)/$va["total"];
             return $va;
         } else return FALSE;
     }
@@ -205,13 +207,52 @@ class Reportes extends CI_Controller {
                     }
                 }
 
-                $va["comunicacion_escrita"] = $this->calcularVA($saber11["comunicacion_escrita"], $prueba["comunicacion_escrita"]);
-                $va["razonamiento_cuantitativo"] = $this->calcularVA($saber11["razonamiento_cuantitativo"], $prueba["razonamiento_cuantitativo"]);
-                $va["lectura_critica"] = $this->calcularVA($saber11["lectura_critica"], $prueba["lectura_critica"]);
-                $va["competencias_ciudadanas"] = $this->calcularVA($saber11["competencias_ciudadanas"], $prueba["competencias_ciudadanas"]);
-                $va["ingles"] = $this->calcularVA($saber11["ingles"], $prueba["ingles"]);
+                $va["comunicacion_escrita"] = array(
+                    'pro' => null,
+                    'nom' => "comunicacion_escrita",
+                    'c1' => $this->calcularVA($saber11["c1"], $prueba["c1"]),
+                    'c2' => $this->calcularVA($saber11["c2"], $prueba["c1"]),
+                    'c3' => $this->calcularVA($saber11["c3"], $prueba["c1"]),
+                    'c4' => $this->calcularVA($saber11["c4"], $prueba["c1"])
+                ); $va["comunicacion_escrita"]["pro"] = ($va["comunicacion_escrita"]["c1"]["bueno"] + $va["comunicacion_escrita"]["c2"]["bueno"] + $va["comunicacion_escrita"]["c3"]["bueno"] + $va["comunicacion_escrita"]["c4"]["bueno"]) / 4; 
+
+                $va["razonamiento_cuantitativo"] = array(
+                    'pro' => null,
+                    'nom' => "razonamiento_cuantitativo",
+                    'c1' => $this->calcularVA($saber11["c1"], $prueba["c2"]),
+                    'c2' => $this->calcularVA($saber11["c2"], $prueba["c2"]),
+                    'c3' => $this->calcularVA($saber11["c3"], $prueba["c2"]),
+                    'c4' => $this->calcularVA($saber11["c4"], $prueba["c2"])
+                ); $va["razonamiento_cuantitativo"]["pro"] = ($va["razonamiento_cuantitativo"]["c1"]["bueno"] + $va["razonamiento_cuantitativo"]["c2"]["bueno"] + $va["razonamiento_cuantitativo"]["c3"]["bueno"] + $va["razonamiento_cuantitativo"]["c4"]["bueno"]) / 4; 
+
+                $va["lectura_critica"] = array(
+                    'pro' => null,
+                    'nom' => "lectura_critica",
+                    'c1' => $this->calcularVA($saber11["c1"], $prueba["c3"]),
+                    'c2' => $this->calcularVA($saber11["c2"], $prueba["c3"]),
+                    'c3' => $this->calcularVA($saber11["c3"], $prueba["c3"]),
+                    'c4' => $this->calcularVA($saber11["c4"], $prueba["c3"])
+                ); $va["lectura_critica"]["pro"] = ($va["lectura_critica"]["c1"]["bueno"] + $va["lectura_critica"]["c2"]["bueno"] + $va["lectura_critica"]["c3"]["bueno"] + $va["lectura_critica"]["c4"]["bueno"]) / 4; 
+
+                $va["competencias_ciudadanas"] = array(
+                    'pro' => null,
+                    'nom' => "competencias_ciudadanas",
+                    'c1' => $this->calcularVA($saber11["c1"], $prueba["c4"]),
+                    'c2' => $this->calcularVA($saber11["c2"], $prueba["c4"]),
+                    'c3' => $this->calcularVA($saber11["c3"], $prueba["c4"]),
+                    'c4' => $this->calcularVA($saber11["c4"], $prueba["c4"])
+                ); $va["competencias_ciudadanas"]["pro"] = ($va["competencias_ciudadanas"]["c1"]["bueno"] + $va["competencias_ciudadanas"]["c2"]["bueno"] + $va["competencias_ciudadanas"]["c3"]["bueno"] + $va["competencias_ciudadanas"]["c4"]["bueno"]) / 4; 
+
+
+                $va["ingles"] = array(
+                    'pro' => null,
+                    'nom' => "ingles",
+                    'c5' => $this->calcularVA($saber11["c5"], $prueba["c5"])
+                ); $va["ingles"]["pro"] = $va["ingles"]["c5"]["bueno"]; 
+
                 array_push($arrayVA, $va);
             }
+
             $data["arrayVA"] = $arrayVA;
             $titulo['titulo'] = 'Reportes';
             $this->load->view('head', $titulo);

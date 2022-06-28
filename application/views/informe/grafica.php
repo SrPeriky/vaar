@@ -60,7 +60,7 @@ Chart.defaults.global.defaultFontColor = '#858796';
         backgroundColor: "#4e73df",
         hoverBackgroundColor: "#2e59d9",
         borderColor: "#4e73df",
-        data: [<?php echo (intval($va["comunicacion_escrita"]["bueno"])*100)/intval($va["comunicacion_escrita"]["total"]) ?>, <?php echo (intval($va["razonamiento_cuantitativo"]["bueno"])*100)/intval($va["razonamiento_cuantitativo"]["total"]) ?>, <?php echo (intval($va["lectura_critica"]["bueno"])*100)/intval($va["lectura_critica"]["total"]) ?>, <?php echo (intval($va["competencias_ciudadanas"]["bueno"])*100)/intval($va["competencias_ciudadanas"]["total"]) ?>, <?php echo (intval($va["ingles"]["bueno"])*100)/intval($va["ingles"]["total"]) ?>],
+        data: [<?php echo $va["comunicacion_escrita"]["pro"] . ", " . $va["razonamiento_cuantitativo"]["pro"] . ", " . $va["lectura_critica"]["pro"] . ", " . $va["competencias_ciudadanas"]["pro"] . ", " . $va["ingles"]["pro"]; ?>],
       }],
     },
     options: {
@@ -134,21 +134,56 @@ Chart.defaults.global.defaultFontColor = '#858796';
 
   </script>
 
-
-   <div class="row text-center">
-     <div class="col-6">
+     <div class="col-12">
        <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">comunicacion_escrita</h6>
             </div>
             <!-- Card Body -->
-            <div class="card-body">
-                <div class="chart-pie pt-4">
-                    <canvas id="t1<?php echo $va["id"]; ?>"></canvas>
+            <div class="card-body text-center row">
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      LENGUAJE
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c1c1<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      MATEMATICAS
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c1c2<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      SOCIALES
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c1c3<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      QUIMICA
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c1c4<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
                 </div>
                 <hr>
-                <div class="mt-4 text-center small">
+                <div class="mt-4 col-12 text-center small">
                     <span class="mr-2">
                         <i class="fas fa-circle text-success"></i>Bueno
                     </span>
@@ -159,15 +194,14 @@ Chart.defaults.global.defaultFontColor = '#858796';
             </div>
         </div>
         <script type="text/javascript">
-
           // Pie Chart Example
-          var ctx = document.getElementById("t1<?php echo $va["id"]; ?>");
-          var t1<?php echo $va["id"]; ?> = new Chart(ctx, {
+          var ctx = document.getElementById("c1c1<?php echo $va["id"]; ?>");
+          var c1c1<?php echo $va["id"]; ?> = new Chart(ctx, {
             type: 'doughnut',
             data: {
               labels: ["Bueno", "Malo"],
               datasets: [{
-                data: [<?php echo ((intval($va["comunicacion_escrita"]["bueno"])*100)/intval($va["comunicacion_escrita"]["total"]));?>, <?php echo ((intval($va["comunicacion_escrita"]["bueno"])*100)/intval($va["comunicacion_escrita"]["total"]))-100;?>],
+                data: [<?php echo round($va["comunicacion_escrita"]["c1"]["bueno"]); ?>, <?php echo round($va["comunicacion_escrita"]["c1"]["malo"]); ?>],
                 backgroundColor: ['#1cc88a', '#e74a3b'],
                 hoverBackgroundColor: ['#17a673', '#b53c30'],
                 hoverBorderColor: "rgba(234, 236, 244, 1)",
@@ -192,21 +226,156 @@ Chart.defaults.global.defaultFontColor = '#858796';
             },
           });
 
+// Pie Chart Example
+          var ctx = document.getElementById("c1c2<?php echo $va["id"]; ?>");
+          var c1c2<?php echo $va["id"]; ?> = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Bueno", "Malo"],
+              datasets: [{
+                data: [<?php echo round($va["comunicacion_escrita"]["c2"]["bueno"]); ?>, <?php echo round($va["comunicacion_escrita"]["c2"]["malo"]); ?>],
+                backgroundColor: ['#1cc88a', '#e74a3b'],
+                hoverBackgroundColor: ['#17a673', '#b53c30'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+              }],
+            },
+            options: {
+              maintainAspectRatio: false,
+              tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+              },
+              legend: {
+                display: false
+              },
+              cutoutPercentage: 80,
+            },
+          });
+
+          // Pie Chart Example
+          var ctx = document.getElementById("c1c3<?php echo $va["id"]; ?>");
+          var c1c3<?php echo $va["id"]; ?> = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Bueno", "Malo"],
+              datasets: [{
+                data: [<?php echo round($va["comunicacion_escrita"]["c3"]["bueno"]); ?>, <?php echo round($va["comunicacion_escrita"]["c3"]["malo"]); ?>],
+                backgroundColor: ['#1cc88a', '#e74a3b'],
+                hoverBackgroundColor: ['#17a673', '#b53c30'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+              }],
+            },
+            options: {
+              maintainAspectRatio: false,
+              tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+              },
+              legend: {
+                display: false
+              },
+              cutoutPercentage: 80,
+            },
+          });
+
+          // Pie Chart Example
+          var ctx = document.getElementById("c1c4<?php echo $va["id"]; ?>");
+          var c1c4<?php echo $va["id"]; ?> = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Bueno", "Malo"],
+              datasets: [{
+                data: [<?php echo round($va["comunicacion_escrita"]["c4"]["bueno"]); ?>, <?php echo round($va["comunicacion_escrita"]["c4"]["malo"]); ?>],
+                backgroundColor: ['#1cc88a', '#e74a3b'],
+                hoverBackgroundColor: ['#17a673', '#b53c30'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+              }],
+            },
+            options: {
+              maintainAspectRatio: false,
+              tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+              },
+              legend: {
+                display: false
+              },
+              cutoutPercentage: 80,
+            },
+          });
+
+
         </script>
      </div>
-     <div class="col-6">
+
+     <div class="col-12">
        <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">razonamiento_cuantitativo</h6>
             </div>
             <!-- Card Body -->
-            <div class="card-body">
-                <div class="chart-pie pt-4">
-                    <canvas id="t2<?php echo $va["id"]; ?>"></canvas>
+            <div class="card-body text-center row">
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      LENGUAJE
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c2c1<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      MATEMATICAS
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c2c2<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      SOCIALES
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c2c3<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      QUIMICA
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c2c4<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
                 </div>
                 <hr>
-                <div class="mt-4 text-center small">
+                <div class="mt-4 col-12 text-center small">
                     <span class="mr-2">
                         <i class="fas fa-circle text-success"></i>Bueno
                     </span>
@@ -217,15 +386,14 @@ Chart.defaults.global.defaultFontColor = '#858796';
             </div>
         </div>
         <script type="text/javascript">
-
           // Pie Chart Example
-          var ctx = document.getElementById("t2<?php echo $va["id"]; ?>");
-          var t2<?php echo $va["id"]; ?> = new Chart(ctx, {
+          var ctx = document.getElementById("c2c1<?php echo $va["id"]; ?>");
+          var c2c1<?php echo $va["id"]; ?> = new Chart(ctx, {
             type: 'doughnut',
             data: {
               labels: ["Bueno", "Malo"],
               datasets: [{
-                data: [<?php echo ((intval($va["razonamiento_cuantitativo"]["bueno"])*100)/intval($va["razonamiento_cuantitativo"]["total"]));?>, <?php echo ((intval($va["razonamiento_cuantitativo"]["bueno"])*100)/intval($va["razonamiento_cuantitativo"]["total"]))-100;?>],
+                data: [<?php echo round($va["razonamiento_cuantitativo"]["c1"]["bueno"]); ?>, <?php echo round($va["razonamiento_cuantitativo"]["c1"]["malo"]); ?>],
                 backgroundColor: ['#1cc88a', '#e74a3b'],
                 hoverBackgroundColor: ['#17a673', '#b53c30'],
                 hoverBorderColor: "rgba(234, 236, 244, 1)",
@@ -250,21 +418,156 @@ Chart.defaults.global.defaultFontColor = '#858796';
             },
           });
 
+// Pie Chart Example
+          var ctx = document.getElementById("c2c2<?php echo $va["id"]; ?>");
+          var c2c2<?php echo $va["id"]; ?> = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Bueno", "Malo"],
+              datasets: [{
+                data: [<?php echo round($va["razonamiento_cuantitativo"]["c2"]["bueno"]); ?>, <?php echo round($va["razonamiento_cuantitativo"]["c2"]["malo"]); ?>],
+                backgroundColor: ['#1cc88a', '#e74a3b'],
+                hoverBackgroundColor: ['#17a673', '#b53c30'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+              }],
+            },
+            options: {
+              maintainAspectRatio: false,
+              tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+              },
+              legend: {
+                display: false
+              },
+              cutoutPercentage: 80,
+            },
+          });
+
+          // Pie Chart Example
+          var ctx = document.getElementById("c2c3<?php echo $va["id"]; ?>");
+          var c2c3<?php echo $va["id"]; ?> = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Bueno", "Malo"],
+              datasets: [{
+                data: [<?php echo round($va["razonamiento_cuantitativo"]["c3"]["bueno"]); ?>, <?php echo round($va["razonamiento_cuantitativo"]["c3"]["malo"]); ?>],
+                backgroundColor: ['#1cc88a', '#e74a3b'],
+                hoverBackgroundColor: ['#17a673', '#b53c30'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+              }],
+            },
+            options: {
+              maintainAspectRatio: false,
+              tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+              },
+              legend: {
+                display: false
+              },
+              cutoutPercentage: 80,
+            },
+          });
+
+          // Pie Chart Example
+          var ctx = document.getElementById("c2c4<?php echo $va["id"]; ?>");
+          var c2c4<?php echo $va["id"]; ?> = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Bueno", "Malo"],
+              datasets: [{
+                data: [<?php echo round($va["razonamiento_cuantitativo"]["c4"]["bueno"]); ?>, <?php echo round($va["razonamiento_cuantitativo"]["c4"]["malo"]); ?>],
+                backgroundColor: ['#1cc88a', '#e74a3b'],
+                hoverBackgroundColor: ['#17a673', '#b53c30'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+              }],
+            },
+            options: {
+              maintainAspectRatio: false,
+              tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+              },
+              legend: {
+                display: false
+              },
+              cutoutPercentage: 80,
+            },
+          });
+
+
         </script>
      </div>
-     <div class="col-4">
+
+     <div class="col-12">
        <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">lectura_critica</h6>
             </div>
             <!-- Card Body -->
-            <div class="card-body">
-                <div class="chart-pie pt-4">
-                    <canvas id="t3<?php echo $va["id"]; ?>"></canvas>
+            <div class="card-body text-center row">
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      LENGUAJE
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c3c1<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      MATEMATICAS
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c3c2<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      SOCIALES
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c3c3<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      QUIMICA
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c3c4<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
                 </div>
                 <hr>
-                <div class="mt-4 text-center small">
+                <div class="mt-4 col-12 text-center small">
                     <span class="mr-2">
                         <i class="fas fa-circle text-success"></i>Bueno
                     </span>
@@ -275,15 +578,14 @@ Chart.defaults.global.defaultFontColor = '#858796';
             </div>
         </div>
         <script type="text/javascript">
-
           // Pie Chart Example
-          var ctx = document.getElementById("t3<?php echo $va["id"]; ?>");
-          var t3<?php echo $va["id"]; ?> = new Chart(ctx, {
+          var ctx = document.getElementById("c3c1<?php echo $va["id"]; ?>");
+          var c3c1<?php echo $va["id"]; ?> = new Chart(ctx, {
             type: 'doughnut',
             data: {
               labels: ["Bueno", "Malo"],
               datasets: [{
-                data: [<?php echo ((intval($va["comunicacion_escrita"]["bueno"])*100)/intval($va["comunicacion_escrita"]["total"]));?>, <?php echo ((intval($va["comunicacion_escrita"]["bueno"])*100)/intval($va["comunicacion_escrita"]["total"]))-100;?>],
+                data: [<?php echo round($va["lectura_critica"]["c1"]["bueno"]); ?>, <?php echo round($va["lectura_critica"]["c1"]["malo"]); ?>],
                 backgroundColor: ['#1cc88a', '#e74a3b'],
                 hoverBackgroundColor: ['#17a673', '#b53c30'],
                 hoverBorderColor: "rgba(234, 236, 244, 1)",
@@ -308,21 +610,157 @@ Chart.defaults.global.defaultFontColor = '#858796';
             },
           });
 
+// Pie Chart Example
+          var ctx = document.getElementById("c3c2<?php echo $va["id"]; ?>");
+          var c3c2<?php echo $va["id"]; ?> = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Bueno", "Malo"],
+              datasets: [{
+                data: [<?php echo round($va["lectura_critica"]["c2"]["bueno"]); ?>, <?php echo round($va["lectura_critica"]["c2"]["malo"]); ?>],
+                backgroundColor: ['#1cc88a', '#e74a3b'],
+                hoverBackgroundColor: ['#17a673', '#b53c30'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+              }],
+            },
+            options: {
+              maintainAspectRatio: false,
+              tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+              },
+              legend: {
+                display: false
+              },
+              cutoutPercentage: 80,
+            },
+          });
+
+          // Pie Chart Example
+          var ctx = document.getElementById("c3c3<?php echo $va["id"]; ?>");
+          var c3c3<?php echo $va["id"]; ?> = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Bueno", "Malo"],
+              datasets: [{
+                data: [<?php echo round($va["lectura_critica"]["c3"]["bueno"]); ?>, <?php echo round($va["lectura_critica"]["c3"]["malo"]); ?>],
+                backgroundColor: ['#1cc88a', '#e74a3b'],
+                hoverBackgroundColor: ['#17a673', '#b53c30'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+              }],
+            },
+            options: {
+              maintainAspectRatio: false,
+              tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+              },
+              legend: {
+                display: false
+              },
+              cutoutPercentage: 80,
+            },
+          });
+
+          // Pie Chart Example
+          var ctx = document.getElementById("c3c4<?php echo $va["id"]; ?>");
+          var c3c4<?php echo $va["id"]; ?> = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Bueno", "Malo"],
+              datasets: [{
+                data: [<?php echo round($va["lectura_critica"]["c4"]["bueno"]); ?>, <?php echo round($va["lectura_critica"]["c4"]["malo"]); ?>],
+                backgroundColor: ['#1cc88a', '#e74a3b'],
+                hoverBackgroundColor: ['#17a673', '#b53c30'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+              }],
+            },
+            options: {
+              maintainAspectRatio: false,
+              tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+              },
+              legend: {
+                display: false
+              },
+              cutoutPercentage: 80,
+            },
+          });
+
+
         </script>
      </div>
-     <div class="col-4">
+
+
+     <div class="col-12">
        <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">competencias_ciudadanas</h6>
             </div>
             <!-- Card Body -->
-            <div class="card-body">
-                <div class="chart-pie pt-4">
-                    <canvas id="t4<?php echo $va["id"]; ?>"></canvas>
+            <div class="card-body text-center row">
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      LENGUAJE
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c4c1<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      MATEMATICAS
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c4c2<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      SOCIALES
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c4c3<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="row">
+                    <div class="col-12">
+                      QUIMICA
+                    </div>
+                    <div class="col-12">
+                      <canvas id="c4c4<?php echo $va["id"]; ?>"></canvas>
+                    </div>
+                  </div>
                 </div>
                 <hr>
-                <div class="mt-4 text-center small">
+                <div class="mt-4 col-12 text-center small">
                     <span class="mr-2">
                         <i class="fas fa-circle text-success"></i>Bueno
                     </span>
@@ -333,15 +771,14 @@ Chart.defaults.global.defaultFontColor = '#858796';
             </div>
         </div>
         <script type="text/javascript">
-
           // Pie Chart Example
-          var ctx = document.getElementById("t4<?php echo $va["id"]; ?>");
-          var t4<?php echo $va["id"]; ?> = new Chart(ctx, {
+          var ctx = document.getElementById("c4c1<?php echo $va["id"]; ?>");
+          var c4c1<?php echo $va["id"]; ?> = new Chart(ctx, {
             type: 'doughnut',
             data: {
               labels: ["Bueno", "Malo"],
               datasets: [{
-                data: [<?php echo ((intval($va["comunicacion_escrita"]["bueno"])*100)/intval($va["comunicacion_escrita"]["total"]));?>, <?php echo ((intval($va["comunicacion_escrita"]["bueno"])*100)/intval($va["comunicacion_escrita"]["total"]))-100;?>],
+                data: [<?php echo round($va["competencias_ciudadanas"]["c1"]["bueno"]); ?>, <?php echo round($va["competencias_ciudadanas"]["c1"]["malo"]); ?>],
                 backgroundColor: ['#1cc88a', '#e74a3b'],
                 hoverBackgroundColor: ['#17a673', '#b53c30'],
                 hoverBorderColor: "rgba(234, 236, 244, 1)",
@@ -366,8 +803,106 @@ Chart.defaults.global.defaultFontColor = '#858796';
             },
           });
 
+// Pie Chart Example
+          var ctx = document.getElementById("c4c2<?php echo $va["id"]; ?>");
+          var c4c2<?php echo $va["id"]; ?> = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Bueno", "Malo"],
+              datasets: [{
+                data: [<?php echo round($va["competencias_ciudadanas"]["c2"]["bueno"]); ?>, <?php echo round($va["competencias_ciudadanas"]["c2"]["malo"]); ?>],
+                backgroundColor: ['#1cc88a', '#e74a3b'],
+                hoverBackgroundColor: ['#17a673', '#b53c30'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+              }],
+            },
+            options: {
+              maintainAspectRatio: false,
+              tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+              },
+              legend: {
+                display: false
+              },
+              cutoutPercentage: 80,
+            },
+          });
+
+          // Pie Chart Example
+          var ctx = document.getElementById("c4c3<?php echo $va["id"]; ?>");
+          var c4c3<?php echo $va["id"]; ?> = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Bueno", "Malo"],
+              datasets: [{
+                data: [<?php echo round($va["competencias_ciudadanas"]["c3"]["bueno"]); ?>, <?php echo round($va["competencias_ciudadanas"]["c3"]["malo"]); ?>],
+                backgroundColor: ['#1cc88a', '#e74a3b'],
+                hoverBackgroundColor: ['#17a673', '#b53c30'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+              }],
+            },
+            options: {
+              maintainAspectRatio: false,
+              tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+              },
+              legend: {
+                display: false
+              },
+              cutoutPercentage: 80,
+            },
+          });
+
+          // Pie Chart Example
+          var ctx = document.getElementById("c4c4<?php echo $va["id"]; ?>");
+          var c4c4<?php echo $va["id"]; ?> = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Bueno", "Malo"],
+              datasets: [{
+                data: [<?php echo round($va["competencias_ciudadanas"]["c4"]["bueno"]); ?>, <?php echo round($va["competencias_ciudadanas"]["c4"]["malo"]); ?>],
+                backgroundColor: ['#1cc88a', '#e74a3b'],
+                hoverBackgroundColor: ['#17a673', '#b53c30'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+              }],
+            },
+            options: {
+              maintainAspectRatio: false,
+              tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+              },
+              legend: {
+                display: false
+              },
+              cutoutPercentage: 80,
+            },
+          });
+
+
         </script>
      </div>
+
      <div class="col-4">
        <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
@@ -377,7 +912,7 @@ Chart.defaults.global.defaultFontColor = '#858796';
             <!-- Card Body -->
             <div class="card-body">
                 <div class="chart-pie pt-4">
-                    <canvas id="t5<?php echo $va["id"]; ?>"></canvas>
+                    <canvas id="c5<?php echo $va["id"]; ?>"></canvas>
                 </div>
                 <hr>
                 <div class="mt-4 text-center small">
@@ -393,13 +928,13 @@ Chart.defaults.global.defaultFontColor = '#858796';
         <script type="text/javascript">
 
           // Pie Chart Example
-          var ctx = document.getElementById("t5<?php echo $va["id"]; ?>");
-          var t5<?php echo $va["id"]; ?> = new Chart(ctx, {
+          var ctx = document.getElementById("c5<?php echo $va["id"]; ?>");
+          var c5<?php echo $va["id"]; ?> = new Chart(ctx, {
             type: 'doughnut',
             data: {
               labels: ["Bueno", "Malo"],
               datasets: [{
-                data: [<?php echo ((intval($va["ingles"]["bueno"])*100)/intval($va["ingles"]["total"]));?>, <?php echo ((intval($va["ingles"]["bueno"])*100)/intval($va["ingles"]["total"]))-100;?>],
+                data: [<?php echo round($va["ingles"]["c5"]["bueno"]); ?>, <?php echo round($va["ingles"]["c5"]["malo"]); ?>],
                 backgroundColor: ['#1cc88a', '#e74a3b'],
                 hoverBackgroundColor: ['#17a673', '#b53c30'],
                 hoverBorderColor: "rgba(234, 236, 244, 1)",

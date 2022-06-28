@@ -3,8 +3,8 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url() ?>home">
+            <li class="nav-item active">
+                <a class="nav-link " href="<?php echo base_url() ?>home">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Escritorio</span></a>
             </li>
@@ -17,22 +17,22 @@
             </div>
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url() ?>pruebas">
+            <li class="nav-item active">
+                <a class="nav-link " href="<?php echo base_url() ?>pruebas">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Registrar</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url() ?>tablas">
+            <li class="nav-item active">
+                <a class="nav-link " href="<?php echo base_url() ?>tablas">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tablas</span></a>
             </li>
             
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url() ?>reportes">
+            <li class="nav-item active">
+                <a class="nav-link " href="<?php echo base_url() ?>reportes">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Reportes</span></a>
             </li>
@@ -46,8 +46,8 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="<?php echo base_url(); ?>user" >
+            <li class="nav-item active">
+                <a class="nav-link  collapsed" href="<?php echo base_url(); ?>user" >
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Ajustes</span>
                 </a>
@@ -55,8 +55,8 @@
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="<?php echo base_url() ?>login/logout#">
+            <li class="nav-item active">
+                <a class="nav-link  collapsed" href="<?php echo base_url() ?>login/logout#">
                     <i class="fas fa-fw fa-sign-out-alt"></i>
                     <span>Salir</span>
                 </a>
