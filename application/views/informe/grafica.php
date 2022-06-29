@@ -903,19 +903,21 @@ Chart.defaults.global.defaultFontColor = '#858796';
         </script>
      </div>
 
-     <div class="col-4">
+     <div class="col-12">
        <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">ingles</h6>
             </div>
             <!-- Card Body -->
-            <div class="card-body">
-                <div class="chart-pie pt-4">
+            <div class="card-body text-center row">
+              <div class="col-12">
+                <div class="">
                     <canvas id="c5<?php echo $va["id"]; ?>"></canvas>
                 </div>
+              </div>
                 <hr>
-                <div class="mt-4 text-center small">
+                <div class="mt-4 col-12 text-center small">
                     <span class="mr-2">
                         <i class="fas fa-circle text-success"></i>Bueno
                     </span>
