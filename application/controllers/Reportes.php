@@ -118,10 +118,18 @@ class Reportes extends CI_Controller {
             // valor esperado = $w * $saber11[i] + $b
             $va["bueno"] = 0;
             $va["malo"] = 0;
+            $va["va"] = array(); // valor agregado
+            $va["ve"] = array(); // valor esperado
             $va["total"] = $n;
             for ($i=0; $i < $n; $i++){
-                $va[$i] = ($prueba[$i] - round($w * $saber11[$i] + $b)); 
-                if ($va[$i]<0) $va["malo"]++; else $va["bueno"]++;
+                $_ve = $w * $saber11[$i] + $b; // calcular valor esperado
+                $_va = ($prueba[$i] - $_ve); // calcular valor agregado
+                array_push($va["va"], $_va); // guardar valor esperado
+                array_push($va["ve"], $_ve); // guardar valor agregado
+                if ($_va<0) 
+                    $va["malo"]++; 
+                else 
+                    $va["bueno"]++;
             }
             $va["malo"] = ($va["malo"]*100)/$va["total"];
             $va["bueno"] = ($va["bueno"]*100)/$va["total"];
@@ -182,15 +190,17 @@ class Reportes extends CI_Controller {
                 $va["nom"] = $this->Reportes_model->getNomPrueba(intval($v2[$i]));
                 $va["id"] = intval($v2[$i]);
                 
+                $saber11["re"] = array(); $prueba["re"] = array();
                 $saber11["c1"] = array(); $prueba["c1"] = array();
                 $saber11["c2"] = array(); $prueba["c2"] = array();
                 $saber11["c3"] = array(); $prueba["c3"] = array();
                 $saber11["c4"] = array(); $prueba["c4"] = array();
                 $saber11["c5"] = array(); $prueba["c5"] = array();
-
+                $va["est"] = array();
                 $temp = true;
                 for ($o=0; $o < count($res); $o++) { 
                     if ($temp) {
+                        array_push($saber11["re"], $res[$o]->re);
                         array_push($saber11["c1"], intval($res[$o]->c1));
                         array_push($saber11["c2"], intval($res[$o]->c2));
                         array_push($saber11["c3"], intval($res[$o]->c3));
@@ -198,14 +208,24 @@ class Reportes extends CI_Controller {
                         array_push($saber11["c5"], intval($res[$o]->c5));
                         $temp = false;
                     } else {
+                        array_push($prueba["re"], $res[$o]->re);
                         array_push($prueba["c1"], intval($res[$o]->c1));
                         array_push($prueba["c2"], intval($res[$o]->c2));
                         array_push($prueba["c3"], intval($res[$o]->c3));
                         array_push($prueba["c4"], intval($res[$o]->c4));
                         array_push($prueba["c5"], intval($res[$o]->c5));
+
+                        // estudiante
+                        //array_push($va["prueba"], array("cc" => $res[$o]->cc, "nom" => $res[$o]->nom, "programa" => $res[$o]->programa));
+                        array_push($va["est"], array("cc" => $res[$o]->cc, "nom" => $res[$o]->nom, "programa" => $res[$o]->programa));
                         $temp = true; 
                     }
                 }
+
+
+                $va["saber"] = $saber11; // notas de saber 11
+                $va["prueba"] = $prueba; // notas de la otra prueba a comparar
+
 
                 $va["comunicacion_escrita"] = array(
                     'pro' => null,

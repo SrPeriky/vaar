@@ -47,7 +47,7 @@ class Reportes_model extends CI_Model {
 
     public function optenerResultadosDeLaPrueba($v0, $v1, $v2, $v3)
     {
-        $sql = 'SELECT estudiante.cc AS cc, prueba.periodo AS periodo, estudiante.nombre AS nom, programa.nom AS programa, tipo.nom AS prueba, prueba.c1, prueba.c2, prueba.c3, prueba.c4, prueba.c5 FROM programa JOIN estudiante JOIN prueba JOIN tipo ON tipo.id IN (0,'.$v2.') AND prueba.cc = estudiante.cc AND estudiante.cc IN ('.$v1.') AND estudiante.id_programa = programa.id AND programa.id IN ('.$v0.') AND prueba.periodo IN ('.$v3.') GROUP BY cc, prueba;';
+        $sql = 'SELECT estudiante.cc AS cc, prueba.periodo AS periodo, prueba.registro AS re, estudiante.nombre AS nom, programa.nom AS programa, tipo.nom AS prueba, prueba.c1, prueba.c2, prueba.c3, prueba.c4, prueba.c5 FROM programa JOIN estudiante JOIN prueba JOIN tipo ON tipo.id IN (0,'.$v2.') AND prueba.cc = estudiante.cc AND estudiante.cc IN ('.$v1.') AND estudiante.id_programa = programa.id AND programa.id IN ('.$v0.') AND prueba.periodo IN ('.$v3.') GROUP BY cc, prueba;';
         //$sql = 'SELECT * FROM tipo WHERE id_institucion IS NULL OR id_institucion = '.$this->session->userdata('id_instituto');
         //echo json_encode($sql);
         $query = $this->db->query($sql);
