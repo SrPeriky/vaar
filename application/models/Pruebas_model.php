@@ -79,7 +79,7 @@ class Pruebas_model extends CI_Model {
         $cc = array();
 
         foreach ($temp as $key) {
-            if (trim($key->IDENTIFICACION)!='' && ! in_array($key->IDENTIFICACION, $cc)) {
+            if ($key->IDENTIFICACION!='' && ! in_array($key->IDENTIFICACION, $cc)) {
                 array_push($estudiantes, array(
                     'id_institucion' => intval($this->session->userdata('id_instituto')),
                     'id_programa' => intval($curso),
