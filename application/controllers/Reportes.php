@@ -118,21 +118,28 @@ class Reportes extends CI_Controller {
             // valor esperado = $w * $saber11[i] + $b
             $va["bueno"] = 0;
             $va["malo"] = 0;
+            $va["va"] = array(); // valor agregado
+            $va["ve"] = array(); // valor esperado
             $va["total"] = $n;
             for ($i=0; $i < $n; $i++){
-                $va[$i] = ($prueba[$i] - round($w * $saber11[$i] + $b)); 
-                if ($va[$i]<0) $va["malo"]++; else $va["bueno"]++;
-            } 
+                $_ve = $w * $saber11[$i] + $b; // calcular valor esperado
+                $_va = ($prueba[$i] - $_ve); // calcular valor agregado
+                array_push($va["va"], $_va); // guardar valor esperado
+                array_push($va["ve"], $_ve); // guardar valor agregado
+                if ($_va<0) 
+                    $va["malo"]++; 
+                else 
+                    $va["bueno"]++;
+            }
+            $va["malo"] = ($va["malo"]*100)/$va["total"];
+            $va["bueno"] = ($va["bueno"]*100)/$va["total"];
             return $va;
         } else return FALSE;
     }
 //1005064537
 //1047510748
-
-
     /*public function FunctionName($value='')
     {
-
         $html='
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -148,9 +155,6 @@ class Reportes extends CI_Controller {
             </div>
         </div>
         ';
-
-
-
         return $html;
     }*/
 
@@ -179,53 +183,96 @@ class Reportes extends CI_Controller {
             $v1 = /*explode(",", */$this->input->post("v1");//);
             $v2 = explode(",", $this->input->post("v2"));
             $v3 = /*explode(",", */$this->input->post("v3");//);
-            //$res = array();
             $arrayVA = array();
-            //$data;
             for ($i=0; $i < count($v2); $i++) { 
-                //$html = $v2[$i];
+
                 $res = $this->Reportes_model->optenerResultadosDeLaPrueba($v0, $v1, $v2[$i], $v3);
                 $va["nom"] = $this->Reportes_model->getNomPrueba(intval($v2[$i]));
                 $va["id"] = intval($v2[$i]);
-                $saber11["comunicacion_escrita"] = array();
-                $saber11["razonamiento_cuantitativo"] = array();
-                $saber11["lectura_critica"] = array();
-                $saber11["competencias_ciudadanas"] = array();
-                $saber11["ingles"] = array();
-
-                $prueba["comunicacion_escrita"] = array();
-                $prueba["razonamiento_cuantitativo"] = array();
-                $prueba["lectura_critica"] = array();
-                $prueba["competencias_ciudadanas"] = array();
-                $prueba["ingles"] = array();
-
+                
+                $saber11["re"] = array(); $prueba["re"] = array();
+                $saber11["c1"] = array(); $prueba["c1"] = array();
+                $saber11["c2"] = array(); $prueba["c2"] = array();
+                $saber11["c3"] = array(); $prueba["c3"] = array();
+                $saber11["c4"] = array(); $prueba["c4"] = array();
+                $saber11["c5"] = array(); $prueba["c5"] = array();
+                $va["est"] = array();
                 $temp = true;
                 for ($o=0; $o < count($res); $o++) { 
                     if ($temp) {
-                        # code...
-                        array_push($saber11["comunicacion_escrita"], intval($res[$o]->comunicacion_escrita));
-                        array_push($saber11["razonamiento_cuantitativo"], intval($res[$o]->razonamiento_cuantitativo));
-                        array_push($saber11["lectura_critica"], intval($res[$o]->lectura_critica));
-                        array_push($saber11["competencias_ciudadanas"], intval($res[$o]->competencias_ciudadanas));
-                        array_push($saber11["ingles"], intval($res[$o]->ingles));
+                        array_push($saber11["re"], $res[$o]->re);
+                        array_push($saber11["c1"], intval($res[$o]->c1));
+                        array_push($saber11["c2"], intval($res[$o]->c2));
+                        array_push($saber11["c3"], intval($res[$o]->c3));
+                        array_push($saber11["c4"], intval($res[$o]->c4));
+                        array_push($saber11["c5"], intval($res[$o]->c5));
                         $temp = false;
                     } else {
-                        array_push($prueba["comunicacion_escrita"], intval($res[$o]->comunicacion_escrita));
-                        array_push($prueba["razonamiento_cuantitativo"], intval($res[$o]->razonamiento_cuantitativo));
-                        array_push($prueba["lectura_critica"], intval($res[$o]->lectura_critica));
-                        array_push($prueba["competencias_ciudadanas"], intval($res[$o]->competencias_ciudadanas));
-                        array_push($prueba["ingles"], intval($res[$o]->ingles));
+                        array_push($prueba["re"], $res[$o]->re);
+                        array_push($prueba["c1"], intval($res[$o]->c1));
+                        array_push($prueba["c2"], intval($res[$o]->c2));
+                        array_push($prueba["c3"], intval($res[$o]->c3));
+                        array_push($prueba["c4"], intval($res[$o]->c4));
+                        array_push($prueba["c5"], intval($res[$o]->c5));
+
+                        // estudiante
+                        //array_push($va["prueba"], array("cc" => $res[$o]->cc, "nom" => $res[$o]->nom, "programa" => $res[$o]->programa));
+                        array_push($va["est"], array("cc" => $res[$o]->cc, "nom" => $res[$o]->nom, "programa" => $res[$o]->programa));
                         $temp = true; 
                     }
                 }
 
-                $va["comunicacion_escrita"] = $this->calcularVA($saber11["comunicacion_escrita"], $prueba["comunicacion_escrita"]);
-                $va["razonamiento_cuantitativo"] = $this->calcularVA($saber11["razonamiento_cuantitativo"], $prueba["razonamiento_cuantitativo"]);
-                $va["lectura_critica"] = $this->calcularVA($saber11["lectura_critica"], $prueba["lectura_critica"]);
-                $va["competencias_ciudadanas"] = $this->calcularVA($saber11["competencias_ciudadanas"], $prueba["competencias_ciudadanas"]);
-                $va["ingles"] = $this->calcularVA($saber11["ingles"], $prueba["ingles"]);
+
+                $va["saber"] = $saber11; // notas de saber 11
+                $va["prueba"] = $prueba; // notas de la otra prueba a comparar
+
+
+                $va["comunicacion_escrita"] = array(
+                    'pro' => null,
+                    'nom' => "comunicacion_escrita",
+                    'c1' => $this->calcularVA($saber11["c1"], $prueba["c1"]),
+                    'c2' => $this->calcularVA($saber11["c2"], $prueba["c1"]),
+                    'c3' => $this->calcularVA($saber11["c3"], $prueba["c1"]),
+                    'c4' => $this->calcularVA($saber11["c4"], $prueba["c1"])
+                ); $va["comunicacion_escrita"]["pro"] = ($va["comunicacion_escrita"]["c1"]["bueno"] + $va["comunicacion_escrita"]["c2"]["bueno"] + $va["comunicacion_escrita"]["c3"]["bueno"] + $va["comunicacion_escrita"]["c4"]["bueno"]) / 4; 
+
+                $va["razonamiento_cuantitativo"] = array(
+                    'pro' => null,
+                    'nom' => "razonamiento_cuantitativo",
+                    'c1' => $this->calcularVA($saber11["c1"], $prueba["c2"]),
+                    'c2' => $this->calcularVA($saber11["c2"], $prueba["c2"]),
+                    'c3' => $this->calcularVA($saber11["c3"], $prueba["c2"]),
+                    'c4' => $this->calcularVA($saber11["c4"], $prueba["c2"])
+                ); $va["razonamiento_cuantitativo"]["pro"] = ($va["razonamiento_cuantitativo"]["c1"]["bueno"] + $va["razonamiento_cuantitativo"]["c2"]["bueno"] + $va["razonamiento_cuantitativo"]["c3"]["bueno"] + $va["razonamiento_cuantitativo"]["c4"]["bueno"]) / 4; 
+
+                $va["lectura_critica"] = array(
+                    'pro' => null,
+                    'nom' => "lectura_critica",
+                    'c1' => $this->calcularVA($saber11["c1"], $prueba["c3"]),
+                    'c2' => $this->calcularVA($saber11["c2"], $prueba["c3"]),
+                    'c3' => $this->calcularVA($saber11["c3"], $prueba["c3"]),
+                    'c4' => $this->calcularVA($saber11["c4"], $prueba["c3"])
+                ); $va["lectura_critica"]["pro"] = ($va["lectura_critica"]["c1"]["bueno"] + $va["lectura_critica"]["c2"]["bueno"] + $va["lectura_critica"]["c3"]["bueno"] + $va["lectura_critica"]["c4"]["bueno"]) / 4; 
+
+                $va["competencias_ciudadanas"] = array(
+                    'pro' => null,
+                    'nom' => "competencias_ciudadanas",
+                    'c1' => $this->calcularVA($saber11["c1"], $prueba["c4"]),
+                    'c2' => $this->calcularVA($saber11["c2"], $prueba["c4"]),
+                    'c3' => $this->calcularVA($saber11["c3"], $prueba["c4"]),
+                    'c4' => $this->calcularVA($saber11["c4"], $prueba["c4"])
+                ); $va["competencias_ciudadanas"]["pro"] = ($va["competencias_ciudadanas"]["c1"]["bueno"] + $va["competencias_ciudadanas"]["c2"]["bueno"] + $va["competencias_ciudadanas"]["c3"]["bueno"] + $va["competencias_ciudadanas"]["c4"]["bueno"]) / 4; 
+
+
+                $va["ingles"] = array(
+                    'pro' => null,
+                    'nom' => "ingles",
+                    'c5' => $this->calcularVA($saber11["c5"], $prueba["c5"])
+                ); $va["ingles"]["pro"] = $va["ingles"]["c5"]["bueno"]; 
+
                 array_push($arrayVA, $va);
             }
+
             $data["arrayVA"] = $arrayVA;
             $titulo['titulo'] = 'Reportes';
             $this->load->view('head', $titulo);

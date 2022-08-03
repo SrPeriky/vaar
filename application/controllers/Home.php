@@ -11,11 +11,18 @@ class Home extends CI_Controller {
     public function index()
     {
         if ($this->validacion->estaconectado()){
-            $titulo['titulo'] = 'Escritorio';
-            $data['instituto'] = $this->Instituto_model->getById(intval($this->session->userdata('id_instituto')));
-            $data['cursos'] = $this->Instituto_model->contCursos(intval($this->session->userdata('id_instituto')));
-            $data['pruebas'] = $this->Instituto_model->contPruebas(intval($this->session->userdata('id_instituto')));
-            $this->load->view('head', $titulo);
+            /***********************
+            ** DECLARAR VARIABLES **
+            ***********************/
+            $titulo['titulo'] = 'Escritorio'; // titulo que se muesntra en el head del html
+            $data['instituto'] = $this->Instituto_model->getById(intval($this->session->userdata('id_instituto'))); // optener datos de la institucion por su ID
+            $data['cursos'] = $this->Instituto_model->contCursos(intval($this->session->userdata('id_instituto'))); // optener cantidad de cursos con los que cuenta la institucio 
+            $data['pruebas'] = $this->Instituto_model->contPruebas(intval($this->session->userdata('id_instituto'))); // optener la cantidad de pruebas registradas por la institucion
+            
+            /*******************
+            ** MOSTRAR VISTAS **
+            *******************/
+            $this->load->view('head', $titulo); // pasar datos del titulo a la vista head
             $this->load->view('model');
             $this->load->view('menu');
             $this->load->view('home/escritorio', $data);
